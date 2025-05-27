@@ -2,8 +2,8 @@
 
 Before actually coding, run the following steps one by one to avoid some unnecessary conflict:
 
-1. Select the folder that you want to save your work: `C:\My_projects\Hexapod_robot` for instance.
-2. In your vscode terminal, run: `python -m venv hexapod_env`, there should be a new folder in your current `Hexapod_robot` after this.
+1. Select the folder that you want to save your work: `C:\My_projects\Hexapod` for instance.
+2. In your vscode terminal, run: `python -m venv hexapod_env`, there should be a new folder in your current `Hexapod` after this.
 3. There is an `activate` file in your `myenv\Scripts`. 
 4. Then run: `hexapod_env\Scripts\activate`.
 5. Then there should be a `(hexapod_env)` appear in the front of your next line in the terminal.
