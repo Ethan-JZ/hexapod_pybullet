@@ -56,57 +56,122 @@ class HexapodRobotWalk(HexapodRobotPose):
                     duration=0.5
                 )
     
-    def generate_turning_seq_fk(self, paras:dict):
-        # Extract parameters
-        gait            = paras["gait"]
-        j1_swing        = paras["j1_swing"]
-        j2_swing        = paras["j2_swing"]
-        j3_swing        = paras["j3_swing"]
+    def generate_turning_seq_fk(self, direction: str, paras:dict) -> None:
+        """
+        generate a turning sequence for the robot based on the given parameters.
+        Input:
+        direction: str, the direction to turn, either "clockwise" or "counterclockwise".
+        paras: dict, a dictionary containing the parameters for the turning sequence.
+               - gait: str, the type of gait to use (e.g., "Tripod").
+               - j1_swing: float, the swing angle for joint 1 (in radians).
+               - j2_swing: float, the swing angle for joint 2 (in radians).
+               - j3_swing: float, the swing angle for joint 3 (in radians).
+        Output:
+        self.turning_sequence_fk: dict, a dictionary containing the turning sequence for each leg.
+                                  The keys are the leg names (e.g., "FL", "ML", "BL", "FR", "MR", "BR"),
+                                  and the values are dictionaries with joint angles for each joint.
+        """
+        # Check if the direction is valid
+        if direction not in ["clockwise", "counterclockwise"]:
+            raise ValueError("Direction must be either 'clockwise' or 'counterclockwise'.")
 
-        # Generate the walking sequence based on the gait
+        # Extract parameters
+        gait     = paras["gait"]
+        j1_swing = paras["j1_swing"]
+        j2_swing = paras["j2_swing"]
+        j3_swing = paras["j3_swing"]
+
+        # Generate the turning sequence based on the gait
         self.turning_sequence_fk = {}
 
         if gait == "Tripod":
-            for leg in self.legs.keys():
-                # get the current pose of the leg
-                theta1_init = self.current_pose[leg][0]
-                theta2_init = self.current_pose[leg][1]
-                theta3_init = self.current_pose[leg][2]
+            
+            if direction == "counterclockwise":
+                for leg in self.legs.keys():
+                    # get the current pose of the leg
+                    theta1_init = self.current_pose[leg][0]
+                    theta2_init = self.current_pose[leg][1]
+                    theta3_init = self.current_pose[leg][2]
+                    
+                    # leg1 in swing state
+                    theta1_motion_1 = np.array([0, -j1_swing]) + theta1_init
+                    theta1_motion_2 = np.array([0, j1_swing])  + theta1_init
+                    theta1_motion = np.hstack([theta1_motion_1, theta1_motion_2])
+                    
+                    # leg2 in swing state
+                    theta2_motion_1 = np.array([0, j2_swing]) + theta2_init
+                    theta2_motion_2 = theta2_motion_1[::-1]
+                    theta2_motion = np.hstack([theta2_motion_1, theta2_motion_2])
+                    
+                    # leg3 in swing state
+                    theta3_motion_1 = np.array([0, j3_swing]) + theta3_init
+                    theta3_motion_2 = theta3_motion_1[::-1]
+                    theta3_motion = np.hstack([theta3_motion_1, theta3_motion_2])
 
-                # leg in swing state
-                theta1_motion_1 = np.array([0, -j1_swing]) + theta1_init
-                theta1_motion_2 = np.array([0, j1_swing])  + theta1_init
-                theta1_motion = np.hstack([theta1_motion_1, theta1_motion_2])
+                    # leg in stance state
+                    theta2_stance = theta2_motion[0] * np.ones(int(len(theta2_motion)))  # stance position
+                    theta3_stance = theta3_motion[0] * np.ones(int(len(theta3_motion)))  # stance position
+                    theta1_stance = theta1_motion[::-1]
+                    theta1_stance_a = np.hstack([theta1_motion, theta1_stance])
+                    theta1_stance_b = np.hstack([theta1_stance, theta1_motion])
 
-                theta2_motion_1 = np.array([0, j2_swing]) + theta2_init
-                theta2_motion_2 = theta2_motion_1[::-1]
-                theta2_motion = np.hstack([theta2_motion_1, theta2_motion_2])
+                    # generate the walking sequence
+                    if leg in ["MR", "FL", "BL"]:
+                        self.turning_sequence_fk[leg] = {
+                            "theta1": theta1_stance_a,
+                            "theta2": np.hstack([theta2_motion, theta2_stance]),
+                            "theta3": np.hstack([theta3_motion, theta3_stance])
+                        }
+                    else:
+                        self.turning_sequence_fk[leg] = {
+                            "theta1": theta1_stance_b,
+                            "theta2": np.hstack([theta2_stance, theta2_motion]),
+                            "theta3": np.hstack([theta3_stance, theta3_motion])
+                        }
+            else:  # clockwise
+                for leg in self.legs.keys():
 
-                theta3_motion_1 = np.array([0, j3_swing]) + theta3_init
-                theta3_motion_2 = theta3_motion_1[::-1]
-                theta3_motion = np.hstack([theta3_motion_1, theta3_motion_2])
+                    # get the current pose of the leg
+                    theta1_init = self.current_pose[leg][0]
+                    theta2_init = self.current_pose[leg][1]
+                    theta3_init = self.current_pose[leg][2]
 
-                # leg in stance state
-                theta2_stance = theta2_motion[0] * np.ones(int(len(theta2_motion)))  # stance position
-                theta3_stance = theta3_motion[0] * np.ones(int(len(theta3_motion)))  # stance position
-                theta1_stance = theta1_motion[::-1]
-                theta1_stance_a = np.hstack([theta1_motion, theta1_stance])
-                theta1_stance_b = np.hstack([theta1_stance, theta1_motion])
+                    # leg1 in swing state
+                    theta1_motion_1 = np.array([0, j1_swing]) + theta1_init
+                    theta1_motion_2 = np.array([0, -j1_swing])  + theta1_init
+                    theta1_motion = np.hstack([theta1_motion_1, theta1_motion_2])
+                    
+                    # leg2 in swing state
+                    theta2_motion_1 = np.array([0, j2_swing]) + theta2_init
+                    theta2_motion_2 = theta2_motion_1[::-1]
+                    theta2_motion = np.hstack([theta2_motion_1, theta2_motion_2])
+                    
+                    # leg3 in swing state
+                    theta3_motion_1 = np.array([0, j3_swing]) + theta3_init
+                    theta3_motion_2 = theta3_motion_1[::-1]
+                    theta3_motion = np.hstack([theta3_motion_1, theta3_motion_2])
 
-                # generate the walking sequence
-                if leg in ["MR", "FL", "BL"]:
-                    self.turning_sequence_fk[leg] = {
-                        "theta1": theta1_stance_a,
-                        "theta2": np.hstack([theta2_motion, theta2_stance]),
-                        "theta3": np.hstack([theta3_motion, theta3_stance])
-                    }
-                else:
-                    self.turning_sequence_fk[leg] = {
-                        "theta1": theta1_stance_b,
-                        "theta2": np.hstack([theta2_stance, theta2_motion]),
-                        "theta3": np.hstack([theta3_stance, theta3_motion])
-                    }
-    
+                    # leg in stance state
+                    theta2_stance = theta2_motion[0] * np.ones(int(len(theta2_motion)))  # stance position
+                    theta3_stance = theta3_motion[0] * np.ones(int(len(theta3_motion)))  # stance position
+                    theta1_stance = theta1_motion[::-1]
+                    theta1_stance_a = np.hstack([theta1_motion, theta1_stance])
+                    theta1_stance_b = np.hstack([theta1_stance, theta1_motion])
+
+                    # generate the walking sequence
+                    if leg in ["MR", "FL", "BL"]:
+                        self.turning_sequence_fk[leg] = {
+                            "theta1": theta1_stance_a,
+                            "theta2": np.hstack([theta2_motion, theta2_stance]),
+                            "theta3": np.hstack([theta3_motion, theta3_stance])
+                        }
+                    else:
+                        self.turning_sequence_fk[leg] = {
+                            "theta1": theta1_stance_b,
+                            "theta2": np.hstack([theta2_stance, theta2_motion]),
+                            "theta3": np.hstack([theta3_stance, theta3_motion])
+                        }
+
     def generate_walking_seq_fk(self, paras:dict):
         """
         generate a walking sequence for the robot based on the given parameters.
@@ -206,15 +271,22 @@ class HexapodRobotWalk(HexapodRobotPose):
         
         return joint_wise_sequence
     
-    def turn(self, time_duration: float=0.5):
-        # Check if the walking sequence is generated
+    def turn(self, time_duration: float=0.5) -> None:
+        """turn the robot by executing the turning sequence.
+        Input:
+        direction: str, the direction to turn, either "clockwise" or "counterclockwise".
+        time_duration: float, the duration of each step in seconds.
+        Output:
+        None, the robot will execute the turning sequence.
+        """
+        # Check if the turning sequence is generated
         if not hasattr(self, 'turning_sequence_fk'):
             raise ValueError("Turning sequence not generated. Call generate_turning_sequence_fk() first.")
         
-        # get the length of the walking sequence
+        # get the length of the turning sequence
         sequence_length = len(self.turning_sequence_fk["FL"]["theta1"])
 
-        # reformat the walking sequence data
+        # reformat the turning sequence data
         joint_wise_seqences = self._reformat_to_joint_sequence(self.turning_sequence_fk)
 
         # get all joint indices for the legs
@@ -234,8 +306,13 @@ class HexapodRobotWalk(HexapodRobotPose):
         for i in range(sequence_length):
             self._set_smooth_joint_positions(joint_indices, joint_target_positions[i], duration=time_duration)
 
-    def walk(self, time_duration: float=0.5):
-        """walk the robot by executing the walking sequence."""
+    def walk(self, time_duration: float=0.5) -> None:
+        """walk the robot by executing the walking sequence.
+        Input:
+        time_duration: float, the duration of each step in seconds.
+        Output:
+        None, the robot will execute the walking sequence.
+        """
         
         # Check if the walking sequence is generated
         if not hasattr(self, 'walking_sequence_fk'):

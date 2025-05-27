@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     # init a robot model and start the init pose setup
     hexapod = HexapodRobotPose(robot_id=robot_id)
-    hexapod._set_certain_pose(pose_name="standing", duration=0.3)  # Execute smooth movement sequence
+    hexapod._set_certain_pose(pose_name="standing", duration=0.2)  # Execute smooth movement sequence
     hexapod_walk = HexapodRobotWalk(robot_id=robot_id)
 
     paras_turn = {
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     }
     num_loops = 10  # Number of walking cycles
     for i in range(num_loops):
-        hexapod_walk.generate_turning_seq_fk(paras_turn)
+        hexapod_walk.generate_turning_seq_fk(direction="counterclockwise", paras=paras_turn)
         hexapod_walk.turn(time_duration=0.2) 
 
     # paras_walk = {
