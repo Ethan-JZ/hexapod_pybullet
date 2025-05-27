@@ -1,0 +1,7 @@
+# Python cache
+__pycache__/
+
+# Virtual environment
+hexapod_env/
+
+target/
