@@ -15,8 +15,8 @@ This is a project on moving a hexapod robot. Folder of `real_world_control` is t
 `.gitignore` contains folder that are not necessary.
 
 # Run the simulation
-`simulator_main.py` is the main file to run the robot in pybullet simulation environment. 
-`pybullet_setup.py` is to load the robot URDF. 
-`helper.py` is some assisted function for (1) Get the joint information, specifically the joint indices. (2) Remove small terms in matrix multiplication, you don't want to see `6.2e-15 * sin(t)` in the expression, it's nonsense. (3) Switch joint name from `joint_ii` to its index in pybullet joint info.
-`robot_pose_sim.py` contains a class `HexapodRobotPose` to set the robot pose.
-`robot_walk_sim.py` contains a child class `HexapodRobotWalk` of  `HexapodRobotPose` to set the robot walking gait and turning gait.
+1. `simulator_main.py` is the main file to run the robot in pybullet simulation environment. 
+2. `pybullet_setup.py` is to load the robot URDF. 
+3. `helper.py` is some assisted function for (1) Get the joint information, specifically the joint indices. (2) Remove small terms in matrix multiplication, you don't want to see `6.2e-15 * sin(t)` in the expression, it's nonsense. (3) Switch joint name from `joint_ii` to its index in pybullet joint info.
+4. `robot_pose_sim.py` contains a class `HexapodRobotPose` to set the robot pose.
+5. `robot_walk_sim.py` contains a child class `HexapodRobotWalk` of  `HexapodRobotPose` to set the robot walking gait and turning gait.
