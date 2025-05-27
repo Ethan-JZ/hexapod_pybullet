@@ -27,7 +27,7 @@ def get_joint_info(robot_id):
     # Loop through all joints and print info
     for joint_idx in range(num_joints):
         joint_info = p.getJointInfo(robot_id, joint_idx)
-        print(joint_info[0], joint_info[1])
+        print(joint_info[0], joint_info[1].decode("utf-8"))
 
 def switch_joint_name_to_index(robot_id, joint_name: str) -> int:
     """
