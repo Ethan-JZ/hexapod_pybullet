@@ -7,7 +7,6 @@ class HexapodRobotWalk(HexapodRobotPose):
 
     def __init__(self, robot_id):
         super().__init__(robot_id)
-        self.walk_speed = 0.1
         self.current_pose = self.stand_pose_target  # Initialize current pose to lying pose
     
     def move_leg(self, leg: str, 
