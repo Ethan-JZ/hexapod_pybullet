@@ -9,7 +9,7 @@
         <color rgba="1 0.3 0.1 1"/>
     </material>
 
-    <material name="black">
+    <material name="gray">
         <color rgba="0.1 0.1 0.1 1"/>
     </material>
 
@@ -784,70 +784,5 @@
         <mechanicalReduction>1</mechanicalReduction>
     </actuator>
     </transmission>
-
-
-    <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>/</robotNamespace>
-        </plugin>
-    </gazebo>
-
-    <gazebo reference="base_link">
-    	<material>Gazebo/Black</material>
-    </gazebo>
-    <gazebo reference="thigh_link_11">
-    	<material>Gazebo/White</material>
-    </gazebo>
-    <gazebo reference="thigh_link_21">
-    	<material>Gazebo/White</material>
-    </gazebo>
-    <gazebo reference="thigh_link_31">
-    	<material>Gazebo/White</material>
-    </gazebo>
-    <gazebo reference="thigh_link_41">
-    	<material>Gazebo/White</material>
-    </gazebo>
-    <gazebo reference="thigh_link_51">
-    	<material>Gazebo/White</material>
-    </gazebo>
-    <gazebo reference="thigh_link_61">
-    	<material>Gazebo/White</material>
-    </gazebo>
-    <gazebo reference="shin_link_12">
-    	<material>Gazebo/Black</material>
-    </gazebo>
-    <gazebo reference="shin_link_22">
-    	<material>Gazebo/Black</material>
-    </gazebo>
-    <gazebo reference="shin_link_32">
-    	<material>Gazebo/Black</material>
-    </gazebo>
-    <gazebo reference="shin_link_42">
-    	<material>Gazebo/Black</material>
-    </gazebo>
-    <gazebo reference="shin_link_52">
-    	<material>Gazebo/Black</material>
-    </gazebo>
-    <gazebo reference="shin_link_62">
-    	<material>Gazebo/Black</material>
-    </gazebo>
-    <gazebo reference="foot_link_13">
-    	<material>Gazebo/White</material>
-    </gazebo>
-    <gazebo reference="foot_link_23">
-    	<material>Gazebo/White</material>
-    </gazebo>
-    <gazebo reference="foot_link_33">
-    	<material>Gazebo/White</material>
-    </gazebo>
-    <gazebo reference="foot_link_43">
-    	<material>Gazebo/White</material>
-    </gazebo>
-    <gazebo reference="foot_link_53">
-    	<material>Gazebo/White</material>
-    </gazebo>
-    <gazebo reference="foot_link_63">
-    	<material>Gazebo/White</material>
-    </gazebo>
     
 </robot>

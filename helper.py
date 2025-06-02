@@ -1,5 +1,7 @@
 import sympy as sp
 import pybullet as p
+import time
+
 
 def remove_small_terms(expr, threshold=1e-13):
     """
