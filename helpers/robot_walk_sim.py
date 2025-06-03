@@ -1,6 +1,7 @@
 import numpy as np
-from robot_pose_sim import HexapodRobotPose
-from helper import switch_joint_name_to_index
+from helpers.robot_pose_sim import HexapodRobotPose
+from helpers.helper import switch_joint_name_to_index
+import json
 
 
 class HexapodRobotWalk(HexapodRobotPose):
@@ -8,6 +9,21 @@ class HexapodRobotWalk(HexapodRobotPose):
     def __init__(self, robot_id):
         super().__init__(robot_id)
         self.current_pose = self.stand_pose_target  # Initialize current pose to lying pose
+        self.tripod_group_1 = ["MR", "FL", "BL"]
+        self.tripod_group_2 = ["FR", "ML", "BR"]
+
+    def _symmetric_motion(self, initial: float, swing: float):
+        """
+        Creates a symmetric motion pattern centered around the initial value.
+        
+        Input:
+        initial: float, the initial position of the joint.
+        swing: float, the amount of swing to apply to the joint.
+        Output:
+        motion: np.ndarray, a symmetric motion pattern that starts and ends at the initial position.
+        """
+        motion = np.array([0, swing]) + initial
+        return np.hstack([motion, motion[::-1]])
     
     def move_leg(self, leg: str, 
                  j1_swing: float=float(np.deg2rad(20)), 
@@ -38,14 +54,10 @@ class HexapodRobotWalk(HexapodRobotPose):
             theta1_motion = np.hstack([theta1_motion_1, theta1_motion_2])
             print(f"FL theta1_motion: {theta1_motion}")
             
-            theta2_motion_1 = np.array([0, j2_swing]) + theta2_init
-            theta2_motion_2 = theta2_motion_1[::-1]
-            theta2_motion = np.hstack([theta2_motion_1, theta2_motion_2])
+            theta2_motion = self._symmetric_motion(theta2_init, j2_swing)
             print(f"FL theta2_motion: {theta2_motion}")
 
-            theta3_motion_1 = np.array([0, j3_swing]) + theta3_init
-            theta3_motion_2 = theta3_motion_1[::-1]
-            theta3_motion = np.hstack([theta3_motion_1, theta3_motion_2])
+            theta3_motion = self._symmetric_motion(theta3_init, j3_swing)
             print(f"FL theta3_motion: {theta3_motion}")
 
             # Set the target pose for the leg
@@ -98,15 +110,8 @@ class HexapodRobotWalk(HexapodRobotPose):
                     theta1_motion_2 = np.array([0, j1_swing])  + theta1_init
                     theta1_motion = np.hstack([theta1_motion_1, theta1_motion_2])
                     
-                    # leg2 in swing state
-                    theta2_motion_1 = np.array([0, j2_swing]) + theta2_init
-                    theta2_motion_2 = theta2_motion_1[::-1]
-                    theta2_motion = np.hstack([theta2_motion_1, theta2_motion_2])
-                    
-                    # leg3 in swing state
-                    theta3_motion_1 = np.array([0, j3_swing]) + theta3_init
-                    theta3_motion_2 = theta3_motion_1[::-1]
-                    theta3_motion = np.hstack([theta3_motion_1, theta3_motion_2])
+                    theta2_motion =  self._symmetric_motion(theta2_init, j2_swing) # leg2 in swing state
+                    theta3_motion =  self._symmetric_motion(theta3_init, j3_swing) # leg3 in swing state
 
                     # leg in stance state
                     theta2_stance = theta2_motion[0] * np.ones(int(len(theta2_motion)))  # stance position
@@ -141,15 +146,8 @@ class HexapodRobotWalk(HexapodRobotPose):
                     theta1_motion_2 = np.array([0, -j1_swing])  + theta1_init
                     theta1_motion = np.hstack([theta1_motion_1, theta1_motion_2])
                     
-                    # leg2 in swing state
-                    theta2_motion_1 = np.array([0, j2_swing]) + theta2_init
-                    theta2_motion_2 = theta2_motion_1[::-1]
-                    theta2_motion = np.hstack([theta2_motion_1, theta2_motion_2])
-                    
-                    # leg3 in swing state
-                    theta3_motion_1 = np.array([0, j3_swing]) + theta3_init
-                    theta3_motion_2 = theta3_motion_1[::-1]
-                    theta3_motion = np.hstack([theta3_motion_1, theta3_motion_2])
+                    theta2_motion =  self._symmetric_motion(theta2_init, j2_swing) # leg2 in swing state
+                    theta3_motion =  self._symmetric_motion(theta3_init, j3_swing) # leg3 in swing state
 
                     # leg in stance state
                     theta2_stance = theta2_motion[0] * np.ones(int(len(theta2_motion)))  # stance position
@@ -159,7 +157,7 @@ class HexapodRobotWalk(HexapodRobotPose):
                     theta1_stance_b = np.hstack([theta1_stance, theta1_motion])
 
                     # generate the walking sequence
-                    if leg in ["MR", "FL", "BL"]:
+                    if leg in self.tripod_group_1:
                         self.turning_sequence_fk[leg] = {
                             "theta1": theta1_stance_a,
                             "theta2": np.hstack([theta2_motion, theta2_stance]),
@@ -205,7 +203,7 @@ class HexapodRobotWalk(HexapodRobotPose):
 
                 # leg in swing state
                 # determine the direction of the swing of joint 1
-                if leg in ["FR", "MR", "BR"]:
+                if leg in self.tripod_group_2:
                     theta1_motion_1 = np.array([0, -j1_swing]) + theta1_init
                     theta1_motion_2 = np.array([0, j1_swing])  + theta1_init
                     theta1_motion = np.hstack([theta1_motion_1, theta1_motion_2])
@@ -214,13 +212,8 @@ class HexapodRobotWalk(HexapodRobotPose):
                     theta1_motion_2 = np.array([0, -j1_swing]) + theta1_init
                     theta1_motion = np.hstack([theta1_motion_1, theta1_motion_2])
                 
-                theta2_motion_1 = np.array([0, j2_swing]) + theta2_init
-                theta2_motion_2 = theta2_motion_1[::-1]
-                theta2_motion = np.hstack([theta2_motion_1, theta2_motion_2])
-
-                theta3_motion_1 = np.array([0, j3_swing]) + theta3_init
-                theta3_motion_2 = theta3_motion_1[::-1]
-                theta3_motion = np.hstack([theta3_motion_1, theta3_motion_2])
+                theta2_motion =  self._symmetric_motion(theta2_init, j2_swing) # leg2 in swing state
+                theta3_motion =  self._symmetric_motion(theta3_init, j3_swing) # leg3 in swing state
 
                 # leg in stance state
                 theta2_stance = theta2_motion[0] * np.ones(int(len(theta2_motion)))  # stance position
@@ -230,7 +223,7 @@ class HexapodRobotWalk(HexapodRobotPose):
                 theta1_stance_b = np.hstack([theta1_stance, theta1_motion])
 
                 # generate the walking sequence
-                if leg in ["MR", "FL", "BL"]:
+                if leg in self.tripod_group_1:
                     self.walking_sequence_fk[leg] = {
                         "theta1": theta1_stance_a,
                         "theta2": np.hstack([theta2_motion, theta2_stance]),
@@ -303,6 +296,9 @@ class HexapodRobotWalk(HexapodRobotPose):
         # and joint_target_positions = [[0.1, 0.3, ...], [0.2, 0.4, ...], ...]
         joint_target_positions = [list(values) for values in zip(*joint_wise_seqences.values())]
 
+        with open("data_cache/turning_sequence.json", "w") as f:
+            json.dump(joint_target_positions, f, indent=4)
+        
         for i in range(sequence_length):
             self._set_smooth_joint_positions(joint_indices, joint_target_positions[i], duration=time_duration)
 

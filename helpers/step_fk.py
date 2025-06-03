@@ -1,6 +1,6 @@
 import sympy as sp
 import numpy as np
-from helper import remove_small_terms
+from helpers.helper import remove_small_terms
 
 class HexapodLegFK:
     

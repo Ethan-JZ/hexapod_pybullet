@@ -1,6 +1,20 @@
-from real_world_control.lx16a import *
-from real_world_control.robot_poses import standing_pose, laying_down_pose, feet_up_pose
+from helpers.lx16a import *
+from helpers.robot_poses import standing_pose, laying_down_pose, feet_up_pose, set_pose
+from helpers.read_turning_data import MapSimToReal
 import time
+
+
+def set_joint_positions(joints, motor_frame_data):
+    """
+    Set the joint positions of the robot based on the motor frame data.
+    Input:
+    joints: dict, a dictionary containing the joint objects
+    motor_frame_data: list, a list of target angles for each joint in the motor frame
+    Output:
+    Moves each joint to the target angle in the specified time.
+    """
+    for i in range(len(motor_frame_data)):
+        set_pose(joints, motor_frame_data[i])
 
 
 def leg_groups(joints):
@@ -42,22 +56,13 @@ def init_robot_motors(port_str: str):
 
 def init_pose(joints):
 
-    time.sleep(1)
-
-    # execute laying down pose
-    laying_down_pose(joints)
+    laying_down_pose(joints) # execute laying down pose
     time.sleep(3)
 
-    # execute feet up pose
-    feet_up_pose(joints)
+    feet_up_pose(joints) # execute feet up pose
     time.sleep(2)
 
-    # standing pose
-    standing_pose(joints)
-    time.sleep(4)
-
-    # execute feet up pose
-    feet_up_pose(joints)
+    standing_pose(joints) # standing pose
     time.sleep(1)
     
     
@@ -68,6 +73,11 @@ if __name__ == '__main__':
 
     # set the joints related to each motor
     joints = init_robot_motors(port_str)
-    
+
     # init the pose
     init_pose(joints)
+
+    mapping_object = MapSimToReal(file_path="helpers/data_cache/turning_sequence.json")
+    motor_frame_data = mapping_object.convert_degree_to_motor_frame()
+    set_joint_positions(joints, motor_frame_data)
+    

@@ -1,10 +1,10 @@
 import pybullet as p
 import time
 import numpy as np
-from pybullet_setup import pybullet_setup
-from robot_walk_sim import HexapodRobotWalk
-from robot_pose_sim import HexapodRobotPose
-from helper import get_joint_info
+from helpers.pybullet_setup import pybullet_setup
+from helpers.robot_walk_sim import HexapodRobotWalk
+from helpers.robot_pose_sim import HexapodRobotPose
+from helpers.helper import get_joint_info
 
 #######################
 # joint and its index #
@@ -41,30 +41,11 @@ if __name__ == "__main__":
     paras_turn = {
         "gait": "Tripod",  # gait type
         "j1_swing": round(np.deg2rad(20), 2), 
-        "j2_swing": round(np.deg2rad(5), 2),  
-        "j3_swing": round(np.deg2rad(0), 2),
+        "j2_swing": round(np.deg2rad(0), 2),  
+        "j3_swing": round(np.deg2rad(5), 2),
     }
-    num_loops = 10  # Number of walking cycles
+    num_loops = 1000  # Number of walking cycles
     for i in range(num_loops):
-        hexapod_walk.generate_turning_seq_fk(direction="counterclockwise", paras=paras_turn)
+        hexapod_walk.generate_turning_seq_fk(direction="clockwise", paras=paras_turn)
         hexapod_walk.turn(time_duration=0.2) 
 
-    # paras_walk = {
-    #     "gait": "Tripod",  # gait type
-    #     "j1_swing": round(np.deg2rad(20), 2), 
-    #     "j2_swing": round(np.deg2rad(5), 2),  
-    #     "j3_swing": round(np.deg2rad(15), 2),
-    # }
-
-    # num_loops = 30  # Number of walking cycles
-    # for i in range(num_loops):
-    #     hexapod_walk.generate_walking_seq_fk(paras_walk)
-    #     hexapod_walk.walk(time_duration=0.1)
-
-
-    # Keep simulation running
-    t = 0
-    while t < 1000:
-        p.stepSimulation()
-        time.sleep(1./240.)
-        t += 1

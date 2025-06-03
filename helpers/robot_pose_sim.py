@@ -14,7 +14,7 @@ class HexapodRobotPose:
         # set control parameters
         self.control_mode = p.POSITION_CONTROL
         self.max_angular_v = 1.0
-        self.kp = 0.5
+        self.kp = 1
         self.kd = 0.1
         
         # define init pose target 

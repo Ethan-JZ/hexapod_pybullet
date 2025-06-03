@@ -1,7 +1,7 @@
 import numpy as np
 import sympy as sp
-from helper import remove_small_terms
-from step_fk import HexapodLegFK
+from helpers.helper import remove_small_terms
+from helpers.step_fk import HexapodLegFK
 
 
 class FootTippleIKSolver(HexapodLegFK):
