@@ -27,9 +27,9 @@ def set_pose(joints, target_joint_position):
     joints["61"].move(angle=target_joint_position[12], time=100)
     joints["62"].move(angle=target_joint_position[13], time=100)
     joints["63"].move(angle=target_joint_position[14], time=100)
-
-
-
+    joints["31"].move(angle=target_joint_position[15], time=100)
+    joints["32"].move(angle=target_joint_position[16], time=100)
+    joints["33"].move(angle=target_joint_position[17], time=100)
 
 def feet_up_pose(joints):
 

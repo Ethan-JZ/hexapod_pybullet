@@ -14,8 +14,8 @@ def set_joint_positions(joints, motor_frame_data):
     Moves each joint to the target angle in the specified time.
     """
     for i in range(len(motor_frame_data)):
+        time.sleep(0.2)  # wait for a short time before setting the next pose
         set_pose(joints, motor_frame_data[i])
-
 
 def leg_groups(joints):
 
@@ -77,7 +77,7 @@ if __name__ == '__main__':
     # init the pose
     init_pose(joints)
 
-    mapping_object = MapSimToReal(file_path="helpers/data_cache/turning_sequence.json")
+    mapping_object = MapSimToReal(file_path="helpers/data_cache/turning_seq_counterclockwise.json")
     motor_frame_data = mapping_object.convert_degree_to_motor_frame()
     set_joint_positions(joints, motor_frame_data)
     

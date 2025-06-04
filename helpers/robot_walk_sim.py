@@ -169,6 +169,8 @@ class HexapodRobotWalk(HexapodRobotPose):
                             "theta2": np.hstack([theta2_stance, theta2_motion]),
                             "theta3": np.hstack([theta3_stance, theta3_motion])
                         }
+        
+        return self.turning_sequence_fk
 
     def generate_walking_seq_fk(self, paras:dict):
         """
@@ -235,6 +237,8 @@ class HexapodRobotWalk(HexapodRobotPose):
                         "theta2": np.hstack([theta2_stance, theta2_motion]),
                         "theta3": np.hstack([theta3_stance, theta3_motion])
                     }
+
+        return self.walking_sequence_fk
     
     def _reformat_to_joint_sequence(self, seq: dict) -> dict:
         # Create mapping from leg names to numbers
@@ -295,9 +299,6 @@ class HexapodRobotWalk(HexapodRobotPose):
         # e.g. joint_wise_seqences = {"joint11": [0.1, 0.2, ...], "joint12": [0.3, 0.4, ...], ...}
         # and joint_target_positions = [[0.1, 0.3, ...], [0.2, 0.4, ...], ...]
         joint_target_positions = [list(values) for values in zip(*joint_wise_seqences.values())]
-
-        with open("data_cache/turning_sequence.json", "w") as f:
-            json.dump(joint_target_positions, f, indent=4)
         
         for i in range(sequence_length):
             self._set_smooth_joint_positions(joint_indices, joint_target_positions[i], duration=time_duration)
