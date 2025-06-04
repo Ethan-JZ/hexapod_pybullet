@@ -71,6 +71,7 @@
             </geometry>
         </collision>
         <inertial>
+            <origin xyz="0.00046564 0.05131632 -0.00001628" rpy="0 0 0"/>
             <mass value="0.1052"/>
             <inertia ixx="0.00032994" ixy="0.00000350" ixz="0" iyy="0.00003398" iyz="0" izz="0.00033378"/>
         </inertial>
@@ -92,7 +93,7 @@
             <geometry>
                 <mesh filename="package://hexapod_pkg/meshes/shin_link_14.stl" scale="1 1 1"/>
             </geometry>
-            <material name="black"/>
+            <material name="white"/>
         </visual>
         <collision>
             <geometry>
@@ -101,6 +102,7 @@
         </collision>
         <inertial>
             <mass value="0.1011"/>
+            <origin xyz="0.00047427 0.06180969 0" rpy="0 0 0"/>
             <inertia ixx="0.00043187" ixy="0.00000399" ixz="0" iyy="0.00003189" iyz="0" izz="0.00045027"/>
         </inertial>
     </link>
@@ -130,6 +132,7 @@
         </collision>
         <inertial>
             <mass value="0.03702"/>
+            <origin xyz="-0.00003530 0.06824399 -0.01129587" rpy="0 0 0"/>
             <inertia ixx="0.00023291" ixy="0" ixz="0" iyy="0.00002537" iyz="-0.00004175" izz="0.00023879"/>
         </inertial>
     </link>
@@ -161,6 +164,7 @@
         </collision>
         <inertial>
             <mass value="0.1052"/>
+            <origin xyz="0.00046564 0.05131632 -0.00001628" rpy="0 0 0"/>
             <inertia ixx="0.00032994" ixy="0.00000350" ixz="0" iyy="0.00003398" iyz="0" izz="0.00033378"/>
         </inertial>
     </link>
@@ -181,7 +185,7 @@
             <geometry>
                 <mesh filename="package://hexapod_pkg/meshes/shin_link_14.stl" scale="1 1 1"/>
             </geometry>
-            <material name="black"/>
+            <material name="white"/>
         </visual>
         <collision>
             <geometry>
@@ -190,6 +194,7 @@
         </collision>
         <inertial>
             <mass value="0.1011"/>
+            <origin xyz="0.00047427 0.06180969 0" rpy="0 0 0"/>
             <inertia ixx="0.00043187" ixy="0.00000399" ixz="0" iyy="0.00003189" iyz="0" izz="0.00045027"/>
         </inertial>
     </link>
@@ -219,6 +224,7 @@
         </collision>
         <inertial>
             <mass value="0.03702"/>
+            <origin xyz="-0.00003530 0.06824399 -0.01129587" rpy="0 0 0"/>
             <inertia ixx="0.00023291" ixy="0" ixz="0" iyy="0.00002537" iyz="-0.00004175" izz="0.00023879"/>
         </inertial>
     </link>
@@ -250,6 +256,7 @@
         </collision>
         <inertial>
             <mass value="0.1052"/>
+            <origin xyz="-0.05131632 0.00046564 -0.00001628" rpy="0 0 0"/>
             <inertia ixx="0.00003398" ixy="-0.00000350" ixz="0" iyy="0.00032994" iyz="0" izz="0.00033378"/>
         </inertial>
     </link>
@@ -270,7 +277,7 @@
             <geometry>
                 <mesh filename="package://hexapod_pkg/meshes/shin_link_2.stl" scale="1 1 1"/>
             </geometry>
-            <material name="black"/>
+            <material name="white"/>
         </visual>
         <collision>
             <geometry>
@@ -279,6 +286,7 @@
         </collision>
         <inertial>
             <mass value="0.1011"/>
+            <origin xyz="-0.06180969 0.00047427 0" rpy="0 0 0"/>
             <inertia ixx="0.00003189" ixy="-0.00000399" ixz="0" iyy="0.00043187" iyz="0" izz="0.00045027"/>
         </inertial>
     </link>
@@ -308,6 +316,7 @@
         </collision>
         <inertial>
             <mass value="0.03702"/>
+            <origin xyz="-0.06824399 -0.00003530 -0.01129587" rpy="0 0 0"/>
             <inertia ixx="0.00002537" ixy="0" ixz="0.00004175" iyy="0.00023291" iyz="0" izz="0.00023879"/>
         </inertial>
     </link>
@@ -339,6 +348,7 @@
         </collision>
         <inertial>
             <mass value="0.1052"/>
+            <origin xyz="0.05131632 -0.00046564 -0.00001628" rpy="0 0 0"/>
             <inertia ixx="0.00003398" ixy="-0.00000350" ixz="0" iyy="0.00032994" iyz="0" izz="0.00033378"/>
         </inertial>
     </link>
@@ -359,7 +369,7 @@
             <geometry>
                 <mesh filename="package://hexapod_pkg/meshes/shin_link_5.stl" scale="1 1 1"/>
             </geometry>
-            <material name="black"/>
+            <material name="white"/>
         </visual>
         <collision>
             <geometry>
@@ -368,6 +378,7 @@
         </collision>
         <inertial>
             <mass value="0.1011"/>
+            <origin xyz="-0.06180969 0.00047427 0" rpy="0 0 0"/>
             <inertia ixx="0.00003189" ixy="-0.00000399" ixz="0" iyy="0.00043187" iyz="0" izz="0.00045027"/>
         </inertial>
     </link>
@@ -397,6 +408,7 @@
         </collision>
         <inertial>
             <mass value="0.03702"/>
+            <origin xyz="-0.06824399 -0.00003530 -0.01129587" rpy="0 0 0"/>
             <inertia ixx="0.00002537" ixy="0" ixz="0.00004175" iyy="0.00023291" iyz="0" izz="0.00023879"/>
         </inertial>
     </link>
@@ -428,6 +440,7 @@
         </collision>
         <inertial>
             <mass value="0.1052"/>
+            <origin xyz="-0.00046564 -0.05131632 -0.00001628" rpy="0 0 0"/>
             <inertia ixx="0.00032994" ixy="0.00000350" ixz="0" iyy="0.00003398" iyz="0" izz="0.00033378"/>
         </inertial>
     </link>
@@ -448,7 +461,7 @@
             <geometry>
                 <mesh filename="package://hexapod_pkg/meshes/shin_link_36.stl" scale="1 1 1"/>
             </geometry>
-            <material name="black"/>
+            <material name="white"/>
         </visual>
         <collision>
             <geometry>
@@ -457,6 +470,7 @@
         </collision>
         <inertial>
             <mass value="0.1011"/>
+            <origin xyz="0.00047427 0.06180969 0" rpy="0 0 0"/>
             <inertia ixx="0.00043187" ixy="0.00000399" ixz="0" iyy="0.00003189" iyz="0" izz="0.00045027"/>
         </inertial>
     </link>
@@ -486,6 +500,7 @@
         </collision>
         <inertial>
             <mass value="0.03702"/>
+            <origin xyz="-0.00003530 0.06824399 -0.01129587" rpy="0 0 0"/>
             <inertia ixx="0.00023291" ixy="0" ixz="0" iyy="0.00002537" iyz="-0.00004175" izz="0.00023879"/>
         </inertial>
     </link>
@@ -517,6 +532,7 @@
         </collision>
         <inertial>
             <mass value="0.1052"/>
+            <origin xyz="-0.00046564 -0.05131632 -0.00001628" rpy="0 0 0"/>
             <inertia ixx="0.00032994" ixy="0.00000350" ixz="0" iyy="0.00003398" iyz="0" izz="0.00033378"/>
         </inertial>
     </link>
@@ -537,7 +553,7 @@
             <geometry>
                 <mesh filename="package://hexapod_pkg/meshes/shin_link_36.stl" scale="1 1 1"/>
             </geometry>
-            <material name="black"/>
+            <material name="white"/>
         </visual>
         <collision>
             <geometry>
@@ -546,6 +562,7 @@
         </collision>
         <inertial>
             <mass value="0.1011"/>
+            <origin xyz="0.00047427 0.06180969 0" rpy="0 0 0"/>
             <inertia ixx="0.00043187" ixy="0.00000399" ixz="0" iyy="0.00003189" iyz="0" izz="0.00045027"/>
         </inertial>
     </link>
@@ -575,12 +592,12 @@
         </collision>
         <inertial>
             <mass value="0.03702"/>
+            <origin xyz="-0.00003530 0.06824399 -0.01129587" rpy="0 0 0"/>
             <inertia ixx="0.00023291" ixy="0" ixz="0" iyy="0.00002537" iyz="-0.00004175" izz="0.00023879"/>
         </inertial>
     </link>
     <!-- chain 3 end -->
 
-    <!-- gazebo control -->
     <!-- LEG 1 -->
     <transmission name="trans_joint_11">
         <type>transmission_interface/SimpleTransmission</type>

@@ -4,4 +4,4 @@ __pycache__/
 # Virtual environment
 hexapod_env/
 
-target/
+tests/
