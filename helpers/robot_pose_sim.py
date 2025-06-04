@@ -13,9 +13,9 @@ class HexapodRobotPose:
         
         # set control parameters
         self.control_mode = p.POSITION_CONTROL
-        self.max_angular_v = 1.0
-        self.kp = 1
-        self.kd = 0.1
+        self.max_angular_v = 3.0
+        self.kp = 2
+        self.kd = 0.01
         
         # define init pose target 
         joint1_init     = [np.pi / 6, 0, -np.pi / 6, -np.pi / 6, 0, np.pi / 6]
@@ -31,6 +31,9 @@ class HexapodRobotPose:
         self.feet_up_pose_target = self._pose_target_in_leg(joint1_init, joint2_feet_up, joint3_feet_up)
         
     def _pose_target_in_leg(self, j1_target: list, j2_target: list, j3_target: list) -> dict:
+        """
+        return joint positions for each leg, excluding the tipple joint for each leg
+        """
 
         # round the joint angles to 2 decimal places
         j1_target = np.around(j1_target, 2)
@@ -56,7 +59,7 @@ class HexapodRobotPose:
         None
         Output:
         legs: dict, a dictionary containing the joint indices for each leg
-              e.g. {"FL": [0, 1, 2], "ML": [3, 4, 5], ...}
+              e.g. {"FL": [0, 1, 2, 3], "ML": [4, 5, 6, 7], ...} each leg includes the tipple index here
         """
         # init control group 
         legs = {
@@ -141,13 +144,13 @@ class HexapodRobotPose:
         target_pose: dict, the target pose for each leg
         """
 
-        # move each leg with the target pose
-        leg_FL_indices = self.legs["FL"]
-        leg_ML_indices = self.legs["ML"]
-        leg_BL_indices = self.legs["BL"]
-        leg_FR_indices = self.legs["FR"]
-        leg_MR_indices = self.legs["MR"]
-        leg_BR_indices = self.legs["BR"]
+        # move each leg with the target pose, excluding the last tipple index
+        leg_FL_indices = self.legs["FL"][0:3]
+        leg_ML_indices = self.legs["ML"][0:3]
+        leg_BL_indices = self.legs["BL"][0:3]
+        leg_FR_indices = self.legs["FR"][0:3]
+        leg_MR_indices = self.legs["MR"][0:3]
+        leg_BR_indices = self.legs["BR"][0:3]
         
 
         if pose_name == "lying":

@@ -8,24 +8,30 @@ from helpers.helper import get_joint_info
 
 #######################
 # joint and its index #
-# 0  joint_11
-# 1  joint_12
-# 2  joint_13
-# 3  joint_41
-# 4  joint_42
-# 5  joint_43
-# 6  joint_21
-# 7  joint_22
-# 8  joint_23
-# 9  joint_51
-# 10 joint_52
-# 11 joint_53
-# 12 joint_61
-# 13 joint_62
-# 14 joint_63
-# 15 joint_31
-# 16 joint_32
-# 17 joint_33
+# 0   joint_11
+# 1   joint_12
+# 2   joint_13
+# 3   joint_1_tipple
+# 4   joint_41
+# 5   joint_42
+# 6   joint_43
+# 7   joint_4_tipple
+# 8   joint_21
+# 9   joint_22
+# 10  joint_23
+# 11  joint_2_tipple
+# 12  joint_51
+# 13  joint_52
+# 14  joint_53
+# 15  joint_5_tipple
+# 16  joint_61
+# 17  joint_62
+# 18  joint_63
+# 19  joint_6_tipple
+# 20  joint_31
+# 21  joint_32
+# 22  joint_33
+# 23  joint_3_tipple
 
 if __name__ == "__main__":
     
@@ -41,8 +47,8 @@ if __name__ == "__main__":
     paras_turn = {
         "gait": "Tripod",  # gait type
         "j1_swing": round(np.deg2rad(20), 2), 
-        "j2_swing": round(np.deg2rad(0), 2),  
-        "j3_swing": round(np.deg2rad(5), 2),
+        "j2_swing": round(np.deg2rad(10), 2),  
+        "j3_swing": round(np.deg2rad(15), 2),
     }
 
     turning_seq = {
@@ -53,7 +59,7 @@ if __name__ == "__main__":
         "joint_61": [], "joint_62": [], "joint_63": [],
         "joint_31": [], "joint_32": [], "joint_33": []
     }
-    num_loops = 10  # Number of walking cycles
+    num_loops = 100  # Number of walking cycles
     for i in range(num_loops):
         turning_seq_clockwise = hexapod_walk.generate_turning_seq_fk(direction="counterclockwise", paras=paras_turn)
         for leg_name in turning_seq_clockwise.keys():

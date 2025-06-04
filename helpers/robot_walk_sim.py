@@ -101,6 +101,10 @@ class HexapodRobotWalk(HexapodRobotPose):
             if direction == "counterclockwise":
                 for leg in self.legs.keys():
                     # get the current pose of the leg
+                    # note that the tipple index is excluded here
+                    # self.current_pose[leg][0] is the leg's 1st joint pose: joint_x1
+                    # self.current_pose[leg][1] is the leg's 2nd joint pose: joint_x2
+                    # self.current_pose[leg][2] is the leg's 3rd joint pose: joint_x3
                     theta1_init = self.current_pose[leg][0]
                     theta2_init = self.current_pose[leg][1]
                     theta3_init = self.current_pose[leg][2]
@@ -170,6 +174,14 @@ class HexapodRobotWalk(HexapodRobotPose):
                             "theta3": np.hstack([theta3_stance, theta3_motion])
                         }
         
+        # the result self.turning_sequence_fk:
+        # {"FL": {"theta1": [], "theta2": [], "theta3": []},
+        #  "FR": {"theta1": [], "theta2": [], "theta3": []},
+        #  "ML": {"theta1": [], "theta2": [], "theta3": []},
+        #  "MR": {"theta1": [], "theta2": [], "theta3": []},
+        #  "BL": {"theta1": [], "theta2": [], "theta3": []},
+        #  "BR": {"theta1": [], "theta2": [], "theta3": []},}
+        
         return self.turning_sequence_fk
 
     def generate_walking_seq_fk(self, paras:dict):
@@ -188,10 +200,10 @@ class HexapodRobotWalk(HexapodRobotPose):
         """
 
         # Extract parameters
-        gait            = paras["gait"]
-        j1_swing        = paras["j1_swing"]
-        j2_swing        = paras["j2_swing"]
-        j3_swing        = paras["j3_swing"]
+        gait     = paras["gait"]
+        j1_swing = paras["j1_swing"]
+        j2_swing = paras["j2_swing"]
+        j3_swing = paras["j3_swing"]
 
         # Generate the walking sequence based on the gait
         self.walking_sequence_fk = {}
@@ -199,6 +211,10 @@ class HexapodRobotWalk(HexapodRobotPose):
         if gait == "Tripod":
             for leg in self.legs.keys():
                 # get the current pose of the leg
+                # note that the tipple index is excluded here
+                # self.current_pose[leg][0] is the leg's 1st joint pose: joint_x1
+                # self.current_pose[leg][1] is the leg's 2nd joint pose: joint_x2
+                # self.current_pose[leg][2] is the leg's 3rd joint pose: joint_x3
                 theta1_init = self.current_pose[leg][0]
                 theta2_init = self.current_pose[leg][1]
                 theta3_init = self.current_pose[leg][2]
@@ -237,6 +253,14 @@ class HexapodRobotWalk(HexapodRobotPose):
                         "theta2": np.hstack([theta2_stance, theta2_motion]),
                         "theta3": np.hstack([theta3_stance, theta3_motion])
                     }
+        
+        # the result self.walking_sequence_fk:
+        # {"FL": {"theta1": [], "theta2": [], "theta3": []},
+        #  "FR": {"theta1": [], "theta2": [], "theta3": []},
+        #  "ML": {"theta1": [], "theta2": [], "theta3": []},
+        #  "MR": {"theta1": [], "theta2": [], "theta3": []},
+        #  "BL": {"theta1": [], "theta2": [], "theta3": []},
+        #  "BR": {"theta1": [], "theta2": [], "theta3": []},}
 
         return self.walking_sequence_fk
     
@@ -252,20 +276,26 @@ class HexapodRobotWalk(HexapodRobotPose):
         }
 
         joint_wise_sequence = {}
-
+        
+        # loop each leg, like "FL"
         for leg_name, leg_data in seq.items():
             leg_number = leg_mapping[leg_name]  # e.g. FL is 1
 
             # make sure the leg_data is a dictionary
             if not isinstance(leg_data, dict):
                 raise ValueError(f"Expected leg data for {leg_name} to be a dictionary, got {type(leg_data)} instead.")
-
+            
+            # loop each leg's {"theta1": [], "theta2": [], "theta3": []}
             for joint_name, joint_data in leg_data.items():
-                # extract joint number from the joint name 
-                joint_number = int(joint_name[-1])  # e.g. theta1 -> 1
-                new_key = f"joint_{leg_number}{joint_number}"  # e.g. joint11
+                
+                # extract joint number from the joint name, e.g. theta1 -> 1
+                joint_number = int(joint_name[-1])
+
+                # form the new key: e.g. joint_11
+                new_key = f"joint_{leg_number}{joint_number}"
                 joint_wise_sequence[new_key] = joint_data
-        
+                
+        # this will return: {"joint_11": [], "joint_12": [], "joint_13": [], ...}
         return joint_wise_sequence
     
     def turn(self, time_duration: float=0.5) -> None:

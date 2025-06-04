@@ -8,24 +8,30 @@ from helpers.helper import get_joint_info
 
 #######################
 # joint and its index #
-# 0  joint_11
-# 1  joint_12
-# 2  joint_13
-# 3  joint_41
-# 4  joint_42
-# 5  joint_43
-# 6  joint_21
-# 7  joint_22
-# 8  joint_23
-# 9  joint_51
-# 10 joint_52
-# 11 joint_53
-# 12 joint_61
-# 13 joint_62
-# 14 joint_63
-# 15 joint_31
-# 16 joint_32
-# 17 joint_33
+# 0   joint_11
+# 1   joint_12
+# 2   joint_13
+# 3   joint_1t
+# 4   joint_41
+# 5   joint_42
+# 6   joint_43
+# 7   joint_4t
+# 8   joint_21
+# 9   joint_22
+# 10  joint_23
+# 11  joint_2t
+# 12  joint_51
+# 13  joint_52
+# 14  joint_53
+# 15  joint_5t
+# 16  joint_61
+# 17  joint_62
+# 18  joint_63
+# 19  joint_6t
+# 20  joint_31
+# 21  joint_32
+# 22  joint_33
+# 23  joint_3t
 
 if __name__ == "__main__":
     
