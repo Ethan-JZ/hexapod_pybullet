@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     paras_walk = {
         "gait": "Tripod",  # gait type
-        "j1_swing": round(np.deg2rad(20), 2), 
+        "j1_swing": round(np.deg2rad(10), 2), 
         "j2_swing": round(np.deg2rad(5), 2),  
         "j3_swing": round(np.deg2rad(10), 2),
     }
@@ -83,7 +83,7 @@ if __name__ == "__main__":
                 walking_seq["joint_62"].extend(walking_seq_return[leg_name]['theta2'])
                 walking_seq["joint_63"].extend(walking_seq_return[leg_name]['theta3'])
 
-        hexapod_walk.walk(time_duration=0.08)
+        hexapod_walk.walk(time_duration=0.1)
     
     # save the turning sequence to a JSON file
     file_path="helpers/data_cache/walking_seq.json"

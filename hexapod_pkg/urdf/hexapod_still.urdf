@@ -16,8 +16,14 @@
     <material name="red">
         <color rgba="1 0 0 1"/>
     </material>
+
+    <joint name="world_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
     
-    <!-- base link -->
+    <!-- Chassis link -->
     <link name="base_link">
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -127,24 +133,6 @@
             <inertia ixx="0.00023291" ixy="0" ixz="0" iyy="0.00002537" iyz="-0.00004175" izz="0.00023879"/>
         </inertial>
     </link>
-    
-    <joint name="joint_1_tipple" type="revolute">
-        <parent link="foot_link_13"/>
-        <child link="foot_link_1_tipple"/>
-        <origin xyz="0 0.15209 -0.04637" rpy="0 0 0"/>  <!-- Position relative to parent -->
-        <axis xyz="0 0 1"/>
-        <limit lower="-0.001" upper="0.001" effort="4.5" velocity="3.0"/>
-    </joint>
-
-    <link name="foot_link_1_tipple">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <sphere radius="0.01"/>
-            </geometry>
-        </visual>
-    </link>
-
     <!-- chain 1 end -->
 
     <!-- chain 4 start -->
@@ -237,24 +225,6 @@
             <inertia ixx="0.00023291" ixy="0" ixz="0" iyy="0.00002537" iyz="-0.00004175" izz="0.00023879"/>
         </inertial>
     </link>
-
-    <joint name="joint_4_tipple" type="revolute">
-        <parent link="foot_link_43"/>
-        <child link="foot_link_4_tipple"/>
-        <origin xyz="0 0.15209 -0.04637" rpy="0 0 0"/>  <!-- Position relative to parent -->
-        <axis xyz="0 0 1"/>
-        <limit lower="-0.001" upper="0.001" effort="4.5" velocity="3.0"/>
-    </joint>
-
-    <link name="foot_link_4_tipple">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <sphere radius="0.01"/>
-            </geometry>
-        </visual>
-    </link>
-
     <!-- chain 4 end -->
 
     <!-- chain 2 start -->
@@ -347,24 +317,6 @@
             <inertia ixx="0.00002537" ixy="0" ixz="0.00004175" iyy="0.00023291" iyz="0" izz="0.00023879"/>
         </inertial>
     </link>
-
-    <joint name="joint_2_tipple" type="revolute">
-        <parent link="foot_link_23"/>
-        <child link="foot_link_2_tipple"/>
-        <origin xyz="-0.15209 0 -0.04637" rpy="0 0 0"/>  <!-- Position relative to parent -->
-        <axis xyz="0 0 1"/>
-        <limit lower="-0.001" upper="0.001" effort="4.5" velocity="3.0"/>
-    </joint>
-
-    <link name="foot_link_2_tipple">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <sphere radius="0.01"/>
-            </geometry>
-        </visual>
-    </link>
-
     <!-- chain 2 end -->
 
     <!-- chain 5 start -->
@@ -457,24 +409,6 @@
             <inertia ixx="0.00002537" ixy="0" ixz="0.00004175" iyy="0.00023291" iyz="0" izz="0.00023879"/>
         </inertial>
     </link>
-
-    <joint name="joint_5_tipple" type="revolute">
-        <parent link="foot_link_53"/>
-        <child link="foot_link_5_tipple"/>
-        <origin xyz="0.15209 0 -0.04637" rpy="0 0 0"/>  <!-- Position relative to parent -->
-        <axis xyz="0 0 1"/>
-        <limit lower="-0.001" upper="0.001" effort="4.5" velocity="3.0"/>
-    </joint>
-
-    <link name="foot_link_5_tipple">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <sphere radius="0.01"/>
-            </geometry>
-        </visual>
-    </link>
-
     <!-- chain 5 end -->
 
     <!-- chain 6 start -->
@@ -567,24 +501,6 @@
             <inertia ixx="0.00023291" ixy="0" ixz="0" iyy="0.00002537" iyz="-0.00004175" izz="0.00023879"/>
         </inertial>
     </link>
-
-    <joint name="joint_6_tipple" type="revolute">
-        <parent link="foot_link_63"/>
-        <child link="foot_link_6_tipple"/>
-        <origin xyz="0 -0.15209 -0.04637" rpy="0 0 0"/>  <!-- Position relative to parent -->
-        <axis xyz="0 0 1"/>
-        <limit lower="-0.001" upper="0.001" effort="4.5" velocity="3.0"/>
-    </joint>
-
-    <link name="foot_link_6_tipple">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <sphere radius="0.01"/>
-            </geometry>
-        </visual>
-    </link>
-
     <!-- chain 6 end -->
 
     <!-- chain 3 start -->
@@ -677,24 +593,6 @@
             <inertia ixx="0.00023291" ixy="0" ixz="0" iyy="0.00002537" iyz="-0.00004175" izz="0.00023879"/>
         </inertial>
     </link>
-
-    <joint name="joint_3_tipple" type="revolute">
-        <parent link="foot_link_33"/>
-        <child link="foot_link_3_tipple"/>
-        <origin xyz="0 -0.15209 -0.04637" rpy="0 0 0"/>  <!-- Position relative to parent -->
-        <axis xyz="0 0 1"/>
-        <limit lower="-0.001" upper="0.001" effort="4.5" velocity="3.0"/>
-    </joint>
-
-    <link name="foot_link_3_tipple">
-        <visual>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-            <geometry>
-                <sphere radius="0.01"/>
-            </geometry>
-        </visual>
-    </link>
-
     <!-- chain 3 end -->
 
     <!-- LEG 1 -->

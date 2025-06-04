@@ -14,8 +14,8 @@ def pybullet_setup(urdf_path):
     p.setAdditionalSearchPath(pybullet_data.getDataPath()) #optionally
     p.setGravity(0, 0, -9.81)  # set gravity
     plane_id = p.loadURDF("plane.urdf") # set plane model
-    p.changeVisualShape(plane_id, -1, rgbaColor=[0.5, 0.8, 0.8, 1])
-    p.configureDebugVisualizer(flag=p.COV_ENABLE_RENDERING, enable=1, rgbBackground=[1, 1, 1])  # Make sure rendering is on
+    p.changeVisualShape(plane_id, -1, rgbaColor=[0.1, 0.1, 0.1, 1])
+    p.configureDebugVisualizer(flag=p.COV_ENABLE_RENDERING, enable=1, rgbBackground=[0.1, 0.1, 0.1])  # Make sure rendering is on
 
     # set camera parameters
     cameraDistance = 2.0  # Distance from camera to target
