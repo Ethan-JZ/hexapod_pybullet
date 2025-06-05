@@ -59,7 +59,7 @@ if __name__ == "__main__":
         "joint_61": [], "joint_62": [], "joint_63": [],
         "joint_31": [], "joint_32": [], "joint_33": []
     }
-    num_loops = 100  # Number of walking cycles
+    num_loops = 10  # Number of walking cycles
     for i in range(num_loops):
         turning_seq_clockwise = hexapod_walk.generate_turning_seq_fk(direction="clockwise", paras=paras_turn)
         for leg_name in turning_seq_clockwise.keys():

@@ -1,5 +1,5 @@
 from helpers.lx16a import *
-from helpers.robot_poses import standing_pose, laying_down_pose, feet_up_pose, set_pose
+from helpers.robot_poses import standing_pose, laying_down_pose, feet_up_pose, set_pose, feet_retrieve_pose
 from helpers.read_turning_data import MapSimToReal
 import time
 
@@ -14,7 +14,7 @@ def set_joint_positions(joints, motor_frame_data):
     Moves each joint to the target angle in the specified time.
     """
     for i in range(len(motor_frame_data)):
-        time.sleep(0.2)  # wait for a short time before setting the next pose
+        time.sleep(0.4)  # wait for a short time before setting the next pose
         set_pose(joints, motor_frame_data[i])
 
 def leg_groups(joints):
@@ -57,10 +57,10 @@ def init_robot_motors(port_str: str):
 def init_pose(joints):
 
     laying_down_pose(joints) # execute laying down pose
-    time.sleep(3)
+    time.sleep(1)
 
     feet_up_pose(joints) # execute feet up pose
-    time.sleep(2)
+    time.sleep(1)
 
     standing_pose(joints) # standing pose
     time.sleep(1)
@@ -77,7 +77,17 @@ if __name__ == '__main__':
     # init the pose
     init_pose(joints)
 
-    mapping_object = MapSimToReal(file_path="helpers/data_cache/turning_seq_clockwise.json")
+    mapping_object   = MapSimToReal(file_path="helpers/data_cache/turning_seq_clockwise.json")
     motor_frame_data = mapping_object.convert_degree_to_motor_frame()
     set_joint_positions(joints, motor_frame_data)
+    time.sleep(1)
+
+    laying_down_pose(joints) # execute feet up pose
+    time.sleep(1)
+
+    feet_up_pose(joints) # execute feet up pose
+    time.sleep(0.5)
+
+    feet_retrieve_pose(joints)
+    time.sleep(1)
     

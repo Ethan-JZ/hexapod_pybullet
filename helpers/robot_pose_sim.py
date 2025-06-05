@@ -13,9 +13,9 @@ class HexapodRobotPose:
         
         # set control parameters
         self.control_mode = p.POSITION_CONTROL
-        self.max_angular_v = 3.0
+        self.max_angular_v = 5.8
         self.kp = 2
-        self.kd = 0.01
+        self.kd = 0.1
         
         # define init pose target 
         joint1_init     = [np.pi / 6, 0, -np.pi / 6, -np.pi / 6, 0, np.pi / 6]
