@@ -14,7 +14,7 @@ def set_joint_positions(joints, motor_frame_data):
     Moves each joint to the target angle in the specified time.
     """
     for i in range(len(motor_frame_data)):
-        time.sleep(0.4)  # wait for a short time before setting the next pose
+        time.sleep(0.3)  # wait for a short time before setting the next pose
         set_pose(joints, motor_frame_data[i])
 
 def leg_groups(joints):
