@@ -18,17 +18,17 @@ class HexapodRobotPose:
         self.kd = 0.1
         
         # define init pose target 
-        joint1_init     = [np.pi / 6, 0, -np.pi / 6, -np.pi / 6, 0, np.pi / 6]
-        joint2_init     = [np.deg2rad(0)] * 6
-        joint3_init     = [np.deg2rad(0)] * 6
-        joint2_feet_up  = [np.deg2rad(90)] * 6
-        joint3_feet_up  = [-np.deg2rad(60)] * 6
-        joint2_standing = [np.deg2rad(20)] * 6
-        joint3_standing = [-np.deg2rad(60)] * 6
+        self.joint1_init     = [np.pi / 6, 0, -np.pi / 6, -np.pi / 6, 0, np.pi / 6]
+        self.joint2_init     = [np.deg2rad(0)] * 6
+        self.joint3_init     = [np.deg2rad(0)] * 6
+        self.joint2_feet_up  = [np.deg2rad(90)] * 6
+        self.joint3_feet_up  = [-np.deg2rad(60)] * 6
+        self.joint2_standing = [np.deg2rad(15)] * 6
+        self.joint3_standing = [-np.deg2rad(80)] * 6
         
-        self.lying_pose_target = self._pose_target_in_leg(joint1_init, joint2_init, joint3_init)
-        self.stand_pose_target = self._pose_target_in_leg(joint1_init, joint2_standing, joint3_standing)
-        self.feet_up_pose_target = self._pose_target_in_leg(joint1_init, joint2_feet_up, joint3_feet_up)
+        self.lying_pose_target = self._pose_target_in_leg(self.joint1_init, self.joint2_init, self.joint3_init)
+        self.stand_pose_target = self._pose_target_in_leg(self.joint1_init, self.joint2_standing, self.joint3_standing)
+        self.feet_up_pose_target = self._pose_target_in_leg(self.joint1_init, self.joint2_feet_up, self.joint3_feet_up)
         
     def _pose_target_in_leg(self, j1_target: list, j2_target: list, j3_target: list) -> dict:
         """
