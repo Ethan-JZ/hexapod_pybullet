@@ -2,6 +2,7 @@
 # as for joint 2 on each leg, the angle decreases, the link move upwards
 # as for joint 3 on each leg, the angle increases, the link move upwards
 
+
 def set_pose(joints, target_joint_position):
     """
     Set the pose of the robot by moving each joint to the target position.
@@ -30,6 +31,7 @@ def set_pose(joints, target_joint_position):
     joints["31"].move(angle=target_joint_position[15], time=100)
     joints["32"].move(angle=target_joint_position[16], time=100)
     joints["33"].move(angle=target_joint_position[17], time=100)
+
 
 def feet_up_pose(joints):
 
