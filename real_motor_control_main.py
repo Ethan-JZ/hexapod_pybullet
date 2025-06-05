@@ -77,7 +77,7 @@ if __name__ == '__main__':
     # init the pose
     init_pose(joints)
 
-    mapping_object = MapSimToReal(file_path="helpers/data_cache/turning_seq_counterclockwise.json")
+    mapping_object = MapSimToReal(file_path="helpers/data_cache/turning_seq_clockwise.json")
     motor_frame_data = mapping_object.convert_degree_to_motor_frame()
     set_joint_positions(joints, motor_frame_data)
     

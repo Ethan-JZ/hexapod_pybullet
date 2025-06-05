@@ -14,7 +14,7 @@ def pybullet_setup(urdf_path):
     p.setAdditionalSearchPath(pybullet_data.getDataPath()) #optionally
     p.setGravity(0, 0, -9.81)  # set gravity
     plane_id = p.loadURDF("plane.urdf") # set plane model
-    p.changeVisualShape(plane_id, -1, rgbaColor=[0.1, 0.1, 0.1, 1])
+    p.changeVisualShape(plane_id, -1, rgbaColor=[0.3, 0.3, 0.3, 1])
     p.configureDebugVisualizer(flag=p.COV_ENABLE_RENDERING, enable=1, rgbBackground=[0.1, 0.1, 0.1])  # Make sure rendering is on
 
     # set camera parameters

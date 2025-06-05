@@ -61,7 +61,7 @@ if __name__ == "__main__":
     }
     num_loops = 100  # Number of walking cycles
     for i in range(num_loops):
-        turning_seq_clockwise = hexapod_walk.generate_turning_seq_fk(direction="counterclockwise", paras=paras_turn)
+        turning_seq_clockwise = hexapod_walk.generate_turning_seq_fk(direction="clockwise", paras=paras_turn)
         for leg_name in turning_seq_clockwise.keys():
             if leg_name == "FL":
                 turning_seq["joint_11"].extend(turning_seq_clockwise[leg_name]['theta1'])
@@ -91,7 +91,7 @@ if __name__ == "__main__":
         hexapod_walk.turn(time_duration=0.2)
     
     # save the turning sequence to a JSON file
-    file_path="helpers/data_cache/turning_seq_counterclockwise.json"
+    file_path="helpers/data_cache/turning_seq_clockwise.json"
     with open(file_path, 'w') as f:
         json.dump(turning_seq, f, indent=4)
 
